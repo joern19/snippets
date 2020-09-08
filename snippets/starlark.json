@@ -1,0 +1,32 @@
+{
+	"cc_library": {
+		"prefix": ["lib"],
+		"body": ["cc_library(", "    name = \"${1}\",", "    srcs = glob([", "        \"${2}/*.cpp\",", "    ]),", "    hdrs = glob([", "        \"${2}/*.h\",", "    ]),", "    ${0}", ")"],
+		"description": "New cc_library."
+	},
+	"cc_test": {
+		"prefix": ["test"],
+		"body": ["cc_test(", "    name = \"${1}-test\",", "    deps = [", "        \"//${2}\"", "    ],", ")"],
+		"description": "New cc_test."
+	},
+	"public visible": {
+		"prefix": ["public", "pub"],
+		"body": ["visibility = [\"//visibility:public\"],"],
+		"description": "Set the visiblity to public."
+	},
+	"visiblity": {
+		"prefix": ["visiblity", "vis"],
+		"body": ["visibility = [\"//visibility:${1:public}\"],"],
+		"description": "Set the visbility. Default is public"
+	},
+	"gtest cc_library": {
+		"prefix": "gtest",
+		"body": ["#gtest", "cc_library(", "    name = \"main\",", "    srcs = glob(", "        [\"googletest-release-1.7.0/src/*.cc\"],", "        exclude = [\"googletest-release-1.7.0/src/gtest-all.cc\"]", "    ),", "    hdrs = glob([", "        \"googletest-release-1.7.0/include/**/*.h\",", "        \"googletest-release-1.7.0/src/*.h\"", "    ]),", "    copts = [", "        \"-Iexternal/gtest/googletest-release-1.7.0/include\",", "        \"-Iexternal/gtest/googletest-release-1.7.0\"", "    ],", "    linkopts = [\"-pthread\"],", "    visibility = [\"//visibility:public\"]," , ")"],
+		"description": "Add the cc library import for gtest"
+	},
+	"gtest http archive": {
+		"prefix": "gtestW",
+		"body": ["http_archive(", "    name = \"gtest\",", "    url = \"https://github.com/google/googletest/archive/release-1.10.0.zip\",", "    sha256 = \"94c634d499558a76fa649edb13721dce6e98fb1e7018dfaeba3cd7a083945e91\",", "    build_file = \"@//:gtest.BUILD\",", "    strip_prefix = \"googletest-release-1.10.0/googletest\",", ")"],
+		"description": "Add the gtest http archive in your Workspace file"
+	}
+}
